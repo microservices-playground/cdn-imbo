@@ -1,0 +1,9 @@
+{
+    "name": "microservices-playground/cdn-imbo",
+    "description": "Image server",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "imbo/imbo": "~2.2.0"
+    }
+}
