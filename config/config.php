@@ -19,11 +19,6 @@ return [
     },
     'eventListeners' => [
         'accessToken' => null,
-        'authenticate' => new class extends Imbo\EventListener\Authenticate {
-            public function authenticate(Imbo\EventManager\EventInterface $event)
-            {
-                return;
-            }
-        }
+        'auth' => null
     ],
 ];
