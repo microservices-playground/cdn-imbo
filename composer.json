@@ -4,6 +4,7 @@
     "type": "project",
     "license": "MIT",
     "require": {
-        "imbo/imbo": "~2.2.0"
+        "imbo/imbo": "~2.2.0",
+        "imbo/imboclient": "~2.0.3"
     }
 }
