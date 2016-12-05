@@ -43,12 +43,9 @@ if (false !== $row) {
                 'val' => $response['imageIdentifier']
             ]);
 
-            // todo database insert
             echo sprintf('Uploaded. Image identifier: %s' . PHP_EOL, $response['imageIdentifier']);
         }
-
-        break;
     }
 }
 
-echo 'ok';
+echo 'Upload successful' . PHP_EOL;
