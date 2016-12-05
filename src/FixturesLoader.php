@@ -40,21 +40,23 @@ class FixturesLoader
             $statement->execute(['filename' => $filename]);
             $row = $statement->fetch();
 
-            if (isset($row['user_id'])) {
-                $response = $this->imboClient->addImage($path);
+            if (!isset($row['user_id'])) {
+                continue;
+            }
 
-                $statement = $this->pdo->prepare('INSERT INTO users_parameters (users_parameters.user_id, users_parameters.parameter_id, users_parameters.value) VALUES (:userId, :parameterId, :val)');
-                $result = $statement->execute([
-                    'userId' => $row['user_id'],
-                    'parameterId' => $imboAvatarParameterId,
-                    'val' => $response['imageIdentifier']
-                ]);
+            $response = $this->imboClient->addImage($path);
 
-                if (true === $result) {
-                    echo sprintf('Uploaded. Image identifier: %s' . PHP_EOL, $response['imageIdentifier']);
-                } else {
-                    echo sprintf('Not uploaded. Issue: %s' . PHP_EOL, implode(PHP_EOL, $statement->errorInfo()));
-                }
+            $statement = $this->pdo->prepare('INSERT INTO users_parameters (users_parameters.user_id, users_parameters.parameter_id, users_parameters.value) VALUES (:userId, :parameterId, :val)');
+            $result = $statement->execute([
+                'userId' => $row['user_id'],
+                'parameterId' => $imboAvatarParameterId,
+                'val' => $response['imageIdentifier']
+            ]);
+
+            if (true === $result) {
+                echo sprintf('Uploaded. Image identifier: %s' . PHP_EOL, $response['imageIdentifier']);
+            } else {
+                echo sprintf('Not uploaded. Issue: %s' . PHP_EOL, implode(PHP_EOL, $statement->errorInfo()));
             }
         }
     }
