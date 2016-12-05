@@ -3,3 +3,6 @@ composer.phar:
 
 install: composer.phar
 	php composer.phar install
+
+upload-avatars:
+	php uploadAvatars.php
