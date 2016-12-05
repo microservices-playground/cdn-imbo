@@ -3,7 +3,7 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 $pdo = new \PDO('mysql:dbname=foodlove;host=192.168.100.2', 'foodlove', 'foodlove');
-$imbo = new ImboClient\ImboClient('http://localhost', [
+$imbo = new ImboClient\ImboClient('http://cdn-imbo', [
     'publicKey' => null,
     'privateKey' => null,
     'user' => 'foodlove',
@@ -35,6 +35,13 @@ if (false !== $row) {
 
         if (isset($row['user_id'])) {
             $response = $imbo->addImage($path);
+
+            $statement = $pdo->prepare('INSERT INTO users_parameters (users_parameters.user_id, users_parameters.parameter_id, users_parameters.value) VALUES (:userId, :parameterId, :val)');
+            $result = $statement->execute([
+                'userId' => $row['user_id'],
+                'parameterId' => $imboAvatarParameterId,
+                'val' => $response['imageIdentifier']
+            ]);
 
             // todo database insert
             echo sprintf('Uploaded. Image identifier: %s' . PHP_EOL, $response['imageIdentifier']);
